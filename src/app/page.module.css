@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6rem;
+    min-height: 100vh;
+}
+
+.iconstyle {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+}

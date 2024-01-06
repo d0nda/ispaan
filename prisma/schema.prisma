@@ -1,0 +1,147 @@
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+enum Employment {
+    FULLTIME
+    PARTTIME
+    CONTRACT
+    FREELANCE
+    INTERNSHIP
+    VOLUNTEER
+}
+
+enum JobCategory {
+    Academic
+    Accounting
+    Administration
+    Advertising
+    Agriculture
+    Automotive
+    Aviation
+    Banking
+    Business_Management
+    Call_Centre
+    Chemical
+    Clothing
+    Construction
+    Consulting
+    Cruise_Ship
+    Defence
+    Design_Services
+    Ecommerce
+    Education
+    Engineering
+    Entertainment
+    Environmental
+    FMCG
+    Fashion
+    Finance
+    General_Employment
+    Government
+    Graduate
+    Health_and_Safety
+    Hospitality
+    Human_Resources
+    IT_and_Computer
+    Import_and_Export
+    Insurance
+    Investment
+    Legal
+    Lifestyle
+    Logistics
+    Management
+    Manufacturing
+    Market_Research
+    Marketing
+    Media
+    Medical
+    Mining
+    Motoring
+    NGOs
+    PR_and_Communication
+    Petrochemical
+    Pharmaceutical
+    Property
+    Purchasing
+    Real_Estate
+    Recruitment
+    Research
+    Retail
+    Sales
+    Social_Services
+    Soft_Skills
+    Sports
+    Stockbroking
+    Technical
+    Technology
+    Telecommunications
+    Trades_and_Services
+    Travel_and_Tourism
+    Warehousing
+}
+
+// Uploaded available jobs
+model Job {
+    id           String      @id @default(auto()) @map("_id") @db.ObjectId
+    userId       String      @db.ObjectId
+    company_name String
+    job_title    String
+    description  String
+    salary       String?
+    location     String?
+    logo         String?
+    employment   Employment
+    category     JobCategory
+    start_date   DateTime
+    end_date     DateTime?
+    created_at   DateTime
+    is_hired     Boolean?
+    is_featured  Boolean?
+    price        Int?
+    created_by   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+    id                String  @id @default(auto()) @map("_id") @db.ObjectId
+    userId            String  @db.ObjectId
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String?
+    access_token      String?
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String?
+    session_state     String?
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+}
+
+model Session {
+    id           String   @id @default(auto()) @map("_id") @db.ObjectId
+    sessionToken String   @unique
+    userId       String   @db.ObjectId
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+    id             String    @id @default(auto()) @map("_id") @db.ObjectId
+    name           String?
+    email          String?   @unique
+    hashedPassword String?
+    emailVerified  DateTime?
+    image          String?
+    accounts       Account[]
+    sessions       Session[]
+    jobs           Job[]
+}
