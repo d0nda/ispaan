@@ -1,9 +1,6 @@
 "use client"
 
 import Container from "@/components/ui/container";
-import { MdDesignServices } from "react-icons/md";
-import { RiUserHeartFill } from "react-icons/ri";
-import { AiOutlineSolution } from "react-icons/ai";
 import { MdEmail } from "react-icons/md";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -16,7 +13,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-//import ProductList from "@/components/ProductList";
+
 
 
 export default function Home() {
