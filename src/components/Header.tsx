@@ -1,5 +1,3 @@
-"use client"
-
 import Link from "next/link"
 import Image from "next/image"
 import Container from "./ui/container"
@@ -7,12 +5,16 @@ import { Button } from "./ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { BiMenu } from "react-icons/bi";
 import { useTheme } from "next-themes"
-import { BsSun, BsMoonStars } from "react-icons/bs";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
+import ProfileButton from "./ui/ProfileButton";
 
 
-export default function Header() {
 
-    const { theme, setTheme } = useTheme();
+export default async function Header() {
+    const session = await getServerSession(authOptions);
+    //"use client" : const { data: session, status } = useSession()
+    console.log("useSession Hook session object", session)
 
     const routes = [
         {
@@ -84,9 +86,18 @@ export default function Header() {
                         ))}
                     </nav>
                     <div className="flex items-center">
-                        <Button>
-                            <Link href="/signin">Sign in</Link>
-                        </Button>
+                        {session && (
+                            <>
+                                <ProfileButton />
+                            </>
+                        )}
+                        {/* Only show the sign in and get started links if the user is not logged in */}
+                        {!session && (
+                            <Button>
+                                <Link href="/signin">Sign in</Link>
+                            </Button>
+                        )}
+
                     </div>
                 </div>
             </Container>

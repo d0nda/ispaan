@@ -13,6 +13,15 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
+import Image from "next/image"
+import { FaStar } from "react-icons/fa";
 
 
 
@@ -91,33 +100,9 @@ export default function Home() {
                   <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                     <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
                       <table className="min-w-full leading-normal">
-                        <thead>
-                          <tr>
-                            <th
-                              className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                              Name
-                            </th>
-                            <th
-                              className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                              products
-                            </th>
-                            <th
-                              className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                              Created at
-                            </th>
-                            <th
-                              className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                              QRT
-                            </th>
-                            <th
-                              className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                              Status
-                            </th>
-                          </tr>
-                        </thead>
                         <tbody>
                           <tr>
-                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <td className="px-5 py-5 border-b border-gray-200 bg-transparent text-sm">
                               <div className="flex items-center">
                                 <div className="flex-shrink-0 w-10 h-10">
                                   <img className="w-full h-full rounded-full"
@@ -153,120 +138,50 @@ export default function Home() {
                               </span>
                             </td>
                           </tr>
-                          <tr>
-                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                              <div className="flex items-center">
-                                <div className="flex-shrink-0 w-10 h-10">
-                                  <img className="w-full h-full rounded-full"
-                                    src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-                                    alt="" />
-                                </div>
-                                <div className="ml-3">
-                                  <p className="text-gray-900 whitespace-no-wrap">
-                                    Blake Bowman
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                              <p className="text-gray-900 whitespace-no-wrap">Editor</p>
-                            </td>
-                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                Jan 01, 2020
-                              </p>
-                            </td>
-                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                77
-                              </p>
-                            </td>
-                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                              <span
-                                className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                <span aria-hidden
-                                  className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                <span className="relative">Activo</span>
-                              </span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                              <div className="flex items-center">
-                                <div className="flex-shrink-0 w-10 h-10">
-                                  <img className="w-full h-full rounded-full"
-                                    src="https://images.unsplash.com/photo-1540845511934-7721dd7adec3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-                                    alt="" />
-                                </div>
-                                <div className="ml-3">
-                                  <p className="text-gray-900 whitespace-no-wrap">
-                                    Dana Moore
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                              <p className="text-gray-900 whitespace-no-wrap">Editor</p>
-                            </td>
-                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                Jan 10, 2020
-                              </p>
-                            </td>
-
-                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                64
-                              </p>
-                            </td>
-                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                              <span
-                                className="relative inline-block px-3 py-1 font-semibold text-orange-900 leading-tight">
-                                <span aria-hidden
-                                  className="absolute inset-0 bg-orange-200 opacity-50 rounded-full"></span>
-                                <span className="relative">Suspended</span>
-                              </span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="px-5 py-5 bg-white text-sm">
-                              <div className="flex items-center">
-                                <div className="flex-shrink-0 w-10 h-10">
-                                  <img className="w-full h-full rounded-full"
-                                    src="https://images.unsplash.com/photo-1522609925277-66fea332c575?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&h=160&w=160&q=80"
-                                    alt="" />
-                                </div>
-                                <div className="ml-3">
-                                  <p className="text-gray-900 whitespace-no-wrap">
-                                    Alonzo Cox
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="px-5 py-5 bg-white text-sm">
-                              <p className="text-gray-900 whitespace-no-wrap">Admin</p>
-                            </td>
-                            <td className="px-5 py-5 bg-white text-sm">
-                              <p className="text-gray-900 whitespace-no-wrap">Jan 18, 2020</p>
-                            </td>
-                            <td className="px-5 py-5 bg-white text-sm">
-                              <p className="text-gray-900 whitespace-no-wrap">70</p>
-                            </td>
-                            <td className="px-5 py-5 bg-white text-sm">
-                              <span
-                                className="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                                <span aria-hidden
-                                  className="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
-                                <span className="relative">Inactive</span>
-                              </span>
-                            </td>
-                          </tr>
                         </tbody>
                       </table>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <div className="group flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl max-w-xs md:max-w-3xl mx-4 md:mx-auto bg-slate-300 dark:bg-white dark:bg-opacity-20 dark:backdrop-blur-md border border-opacity-30  border-black dark:border-white shadow-lg p-4 mb-5 cursor-pointer">
+                <div className="w-full md:w-1/3 grid place-items-center">
+                  <img
+                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
+                    alt='product image'
+                    className="rounded-xl"
+                  />
+                </div>
+                <div className="w-full mt-4 md:w-2/3 flex flex-col space-y-2 p-3">
+                  <h3 className="font-black text-black dark:text-white md:text-2xl text-xl group-hover:text-blue-500">Title</h3>
+                  <p className="md:text-lg text-black dark:text-white text-base truncate ...">Description........</p>
+                  <div className="flex justify-between item-center pt-16">
+                    <p className="text-xl font-black text-black dark:text-white md:block">
+                      Salary
+                    </p>
+                    <div className="flex items-center">
+                      <FaStar className="text-yellow-500" size={15} />
+                      <p className="text-black dark:text-white font-bold text-sm ml-1">
+                        4.96
+                      </p>
+                    </div>
+                    <div className="bg-gray-950 dark:bg-gray-200 px-3 py-1 rounded-full text-xs font-medium text-white dark:text-black md:block">
+                      Job cat
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <Accordion type="single" collapsible>
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>Is it accessible?</AccordionTrigger>
+                  <AccordionContent>
+                    Yes. It adheres to the WAI-ARIA design pattern.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+
             </div>
           </div>
         </section>
