@@ -37,7 +37,7 @@ export default function Home() {
               <span>Connecting you to your next job opportunity.</span>
             </h1>
             <h3 className="mb-8 text-sm text-black dark:text-white md:text-lg">
-              Your Future starts here...
+              Your Career starts here...
             </h3>
             <div className="mb-8 flex w-full mx-auto max-w-sm items-center space-x-2">
               <Input type="search" placeholder="Search" />
@@ -55,7 +55,7 @@ export default function Home() {
           <div className="mx-auto sm:mx-4 md:mx-6 lg:mx-16 xl:mx-20 2xl:mx-24 max-w-screen-sm sm:max-w-screen-md md:max-w-screen-lg lg:max-w-screen-xl xl:max-w-screen-2xl 2xl:max-w-screen-3xl">
             <h1 className="mb-4 text-center font-semibold text-black dark:text-white text-xl lg:text-4xl">Featured Jobs</h1>
             <p className="mb-6 text-center text-black dark:text-white">
-              From sleek interfaces to seamless functionality, we redefine user interaction. Dive into innovation and make your digital journey extraordinary.
+              All featured jobs will be displayed here.
             </p>
             <div className="border-black border-opacity-30 dark:border-white border-t"></div>
             <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
@@ -93,6 +93,9 @@ export default function Home() {
           <div className="mx-2 sm:mx-4 md:mx-6 lg:mx-16 xl:mx-20 2xl:mx-24">
             <div className="text-center text-black dark:text-white mt-4 mb-3">
               <h1 className="mb-6 text-3xl lg:text-4xl font-semibold">Newly Posted</h1>
+              <p className="mb-6 text-center text-black dark:text-white">
+                All Daily updated jobs will be displayed here.
+              </p>
               <div className="border-black border-opacity-30 dark:border-white border-t"></div>
 
               <div className="w-full flex mt-8 mx-auto items-center justify-between pb-6">
