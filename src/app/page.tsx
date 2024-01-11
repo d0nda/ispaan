@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/accordion"
 
 import Image from "next/image"
-import { FaStar } from "react-icons/fa";
+
 
 
 
