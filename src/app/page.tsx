@@ -19,13 +19,23 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import useSWR from 'swr';
+import Link from 'next/link';
+//import Image from "next/image"
 
-import Image from "next/image"
+interface ErrorResponse {
+  message: string;
+}
 
-
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 
 export default function Home() {
+  const { data: jobCategories, error } = useSWR('/api/categories', fetcher);
+
+  if (error) return <div className="text-center">An error occurred.</div>;
+  if (!jobCategories) return <div className="text-center">Loading Categories....</div>;
+
   return (
     <main>
 
@@ -47,8 +57,16 @@ export default function Home() {
         </div>
       </section>
       <Container>
-        <div className="mb-5">
-          <Badge>Badge</Badge>
+        <div className="mb-5 px-2">
+          {jobCategories && (
+            <div>
+              {jobCategories.map((categoryObject: { category: string }) => (
+                <Link href={`/jobs?category=${encodeURIComponent(categoryObject.category)}`} key={categoryObject.category}>
+                  <Badge className="mr-3 mb-3 p-1 cursor-pointer">{categoryObject.category}</Badge>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
         {/* Featured Jobs */}
         <section className="mb-8 p-4" >
