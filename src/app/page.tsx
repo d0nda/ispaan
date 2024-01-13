@@ -4,38 +4,16 @@ import Container from "@/components/ui/container";
 import { MdEmail } from "react-icons/md";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import useSWR from 'swr';
-import Link from 'next/link';
+import Category from "@/components/Category";
+import Featured from "@/components/Featured";
+import JobAccordion from "@/components/JobAccordion";
 //import Image from "next/image"
 
 interface ErrorResponse {
   message: string;
 }
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-
 export default function Home() {
-  const { data: jobCategories, error } = useSWR('/api/categories', fetcher);
-
-  if (error) return <div className="text-center">An error occurred.</div>;
-  if (!jobCategories) return <div className="text-center">Loading Categories....</div>;
-
   return (
     <main>
 
@@ -57,17 +35,10 @@ export default function Home() {
         </div>
       </section>
       <Container>
-        <div className="mb-5 px-2">
-          {jobCategories && (
-            <div>
-              {jobCategories.map((categoryObject: { category: string }) => (
-                <Link href={`/jobs?category=${encodeURIComponent(categoryObject.category)}`} key={categoryObject.category}>
-                  <Badge className="mr-3 mb-3 p-1 cursor-pointer">{categoryObject.category}</Badge>
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
+
+        {/* Category badge */}
+        <Category />
+
         {/* Featured Jobs */}
         <section className="mb-8 p-4" >
           <div className="mx-auto sm:mx-4 md:mx-6 lg:mx-16 xl:mx-20 2xl:mx-24 max-w-screen-sm sm:max-w-screen-md md:max-w-screen-lg lg:max-w-screen-xl xl:max-w-screen-2xl 2xl:max-w-screen-3xl">
@@ -76,32 +47,9 @@ export default function Home() {
               All featured jobs will be displayed here.
             </p>
             <div className="border-black border-opacity-30 dark:border-white border-t"></div>
-            <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
-              <div className="mt-11 mb-8 mx-auto">
-                <Carousel
-                  opts={{
-                    align: "start",
-                  }}
-                  className="w-full max-w-lg"
-                >
-                  <CarouselContent>
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                        <div className="p-1">
-                          <Card>
-                            <CardContent className="flex aspect-square items-center justify-center p-6">
-                              <span className="text-3xl font-semibold">{index + 1}</span>
-                            </CardContent>
-                          </Card>
-                        </div>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </Carousel>
-              </div>
-            </div>
+
+            {/* Featured Jobs Carousel */}
+            <Featured />
 
           </div>
         </section>
@@ -115,41 +63,9 @@ export default function Home() {
                 All Daily updated jobs will be displayed here.
               </p>
               <div className="border-black border-opacity-30 dark:border-white border-t"></div>
-              <Accordion type="single" collapsible>
-                <AccordionItem value="item-1" className="mt-8 md:space-x-5 space-y-3 md:space-y-0 rounded-xl max-w-xs md:max-w-3xl mx-4 md:mx-auto bg-slate-300 dark:bg-white dark:bg-opacity-20 dark:backdrop-blur-md border border-opacity-30  border-black dark:border-white shadow-lg p-4 mb-5 cursor-pointer">
-                  <AccordionTrigger>
-                    <div className="flex-shrink-0 w-10 h-10">
-                      <img className="w-full h-full rounded-full"
-                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-                        alt="" />
-                    </div>
-                    <div className="ml-3">
-                      <p className="text-black dark:text-white whitespace-no-wrap">
-                        Vera Carpenter
-                      </p>
-                    </div>
-                    <div className="px-5 py-5 text-sm">
-                      <p className="text-black dark:text-white whitespace-no-wrap">Admin</p>
-                    </div>
-                    <div className="px-5 py-5 text-sm">
-                      <p className="text-black dark:text-white whitespace-no-wrap">
-                        Jan 21, 2020
-                      </p>
-                    </div>
-                    <div className="px-5 py-5 text-sm">
-                      <span
-                        className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                        <span aria-hidden
-                          className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                        <span className="relative">Apply</span>
-                      </span>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    Yes. It adheres to the WAI-ARIA design pattern.
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+
+              {/* Job Accordion */}
+              <JobAccordion />
             </div>
           </div>
         </section>
