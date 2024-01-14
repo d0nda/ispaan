@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
-import { Job } from '../../../types/job';
+import { Job } from '../../../../types/job';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -16,7 +16,10 @@ export default function JobsByCategory() {
     }
 
     // Fetch jobs based on the selected category
-    const { data: jobs, error } = useSWR(`/api/categories/${encodeURIComponent(category)}`, fetcher);
+    const { data: jobs, error } = useSWR(`/api/categories/[category]/${encodeURIComponent(category)}`, fetcher);
+    console.log('Category:', category);
+    console.log('Jobs:', jobs);
+    console.log('Error:', error);
 
     // ... (error handling)
 

@@ -6,19 +6,21 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
+import { notFound, } from 'next/navigation'
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function JobAccordion() {
     const { data: jobs, error } = useSWR('/api/job', fetcher);
 
-    if (error) return <div>Error loading jobs</div>;
+    if (error) notFound()
     if (!jobs) return <div>Loading...</div>;
+
 
     return (
         <div>
             <Accordion type="single" collapsible>
-                {jobs.map((job) => (
+                {jobs.map((job: { id: React.Key | null | undefined; company_name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; job_title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; start_date: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; description: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; }) => (
                     <AccordionItem
                         key={job.id}
                         value={`item-${job.id}`}

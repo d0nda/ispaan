@@ -86,15 +86,15 @@ export type Job = {
     salary?: string;
     location?: string;
     logo?: string;
-    employment: Employment; // Assuming Employment is another type you have defined
-    category: JobCategory; // Assuming JobCategory is another type you have defined
+    employment: Employment;
+    category: JobCategory;
     start_date: Date;
     end_date?: Date;
     created_at: Date;
     is_hired?: boolean;
     is_featured?: boolean;
     price?: number;
-    created_by: User; // Assuming User is another type you have defined
+    created_by: User;
 };
 
 export type User = {

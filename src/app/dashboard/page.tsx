@@ -21,9 +21,9 @@ async function Dashboard() {
                 <div>
                     <p className="mb-3 mt-3">{user.email}</p>
                 </div>
-                All your Downloads will be in the specific category below:
+                All your Job application will be in  category below:
                 <hr />
-                <h4>Landing pages</h4>
+                <h4>Featured Jobs</h4>
                 <ul>
                     <li></li>
                     <li></li>
@@ -31,21 +31,14 @@ async function Dashboard() {
                     <li></li>
                 </ul>
                 <hr />
-                <h4>Admin Ui's</h4>
+                <h4>Newly Posted</h4>
                 <ul>
                     <li></li>
                     <li></li>
                     <li></li>
                     <li></li>
                 </ul>
-                <hr />
-                <h4>Ui toolkits</h4>
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
+
             </div>
         );
     }
