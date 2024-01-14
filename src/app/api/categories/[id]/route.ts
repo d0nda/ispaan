@@ -1,20 +1,21 @@
 import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
-//This is meant for viewing each job by ID
 
-export const GET = async ({ params }) => {
+export const GET = async (req: any) => {
+    const { category } = req.query;
+
     try {
-        const id = params.id;
-        const jobCategory = await prisma.job.findUnique({
+        const categories = await prisma.job.findMany({
             where: {
-                id: id,
+                category: category,
             },
+            // ... (other query options)
         });
-        console.log(jobCategory);
-        return NextResponse.json(jobCategory)
+        console.log('Retrieved categories from Prisma Solved:', categories);
+        return NextResponse.json(categories)
     } catch (error) {
-        console.error(error);
+        console.error("Error getting jobs by category:", error);
         return new NextResponse({ error: "Internal Server Error" }, { status: 500 });
     }
 };

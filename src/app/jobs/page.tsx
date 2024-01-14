@@ -1,7 +1,8 @@
-import { useRouter } from 'next/router';
+"use client"
+
+import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
 import { Job } from '../../../types/job';
-
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -9,8 +10,13 @@ export default function JobsByCategory() {
     const router = useRouter();
     const { category } = router.query;
 
+    if (!category) {
+        // Handle the case when category is not present in the URL
+        return <div>No category specified</div>;
+    }
+
     // Fetch jobs based on the selected category
-    const { data: jobs, error } = useSWR(`/api/jobs?category=${category}`, fetcher);
+    const { data: jobs, error } = useSWR(`/api/categories/${encodeURIComponent(category)}`, fetcher);
 
     // ... (error handling)
 
