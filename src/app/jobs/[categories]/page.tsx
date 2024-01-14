@@ -16,10 +16,7 @@ export default function JobsByCategory() {
     }
 
     // Fetch jobs based on the selected category
-    const { data: jobs, error } = useSWR(`/api/categories/[category]/${encodeURIComponent(category)}`, fetcher);
-    console.log('Category:', category);
-    console.log('Jobs:', jobs);
-    console.log('Error:', error);
+    const { data: jobs, error } = useSWR(`/api/categories/${encodeURIComponent(category)}`, fetcher);
 
     // ... (error handling)
 
