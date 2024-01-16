@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Category() {
-    const { data: jobCategories, error } = useSWR('/api/categories/[category]', fetcher);
+    const { data: jobCategories, error } = useSWR('/api/categories', fetcher);
 
     //if (error) return <div className="text-center">An error occurred.</div>;
     //if (!jobCategories) return <div className="text-center">Loading Categories....</div>;
