@@ -29,16 +29,11 @@ export default async function Header() {
         },
         {
             id: 3,
-            title: "Post a Job",
-            url: "/postjob",
-        },
-        {
-            id: 4,
             title: "About us",
             url: "/about",
         },
         {
-            id: 5,
+            id: 4,
             title: "Contact us",
             url: "/contact",
         },
