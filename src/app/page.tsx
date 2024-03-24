@@ -64,9 +64,10 @@ export default function Home() {
               </p>
               <div className="border-black border-opacity-30 dark:border-white border-t"></div>
 
-              {/* Job Accordion */}
-              <JobAccordion />
+              
             </div>
+            {/* Job Accordion */}
+            <JobAccordion />
           </div>
         </section>
 

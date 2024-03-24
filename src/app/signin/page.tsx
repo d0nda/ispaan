@@ -72,12 +72,6 @@ export default function Signin() {
                 </button>
                 {/* Google Sign In Button */}
 
-                {/* Github Sign In Button */}
-                <button onClick={() => signIn('github', { callbackUrl: '/dashboard' })} type="button" className={styles.githubbtn}>
-                    <span className="px-2"><ImGithub className={styles.iconstyle} /></span>Continue with Github
-                </button>
-                {/* Github Sign In Button */}
-
                 <p className="mt-10 text-center text-sm text-black dark:text-white">
                     Don't have an account ?
                     <Link href="./signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"> Sign up Here.</Link>
