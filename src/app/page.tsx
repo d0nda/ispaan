@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input"
 import Category from "@/components/Category";
 import Featured from "@/components/Featured";
 import JobAccordion from "@/components/JobAccordion";
-//import Image from "next/image"
 
 interface ErrorResponse {
   message: string;
@@ -46,7 +45,7 @@ export default function Home() {
             <p className="mb-6 text-center text-black dark:text-white">
               All featured jobs will be displayed here.
             </p>
-            <div className="border-black border-opacity-30 dark:border-white border-t"></div>
+            <div className="mb-5 border-black border-opacity-30 dark:border-white border-t"></div>
 
             {/* Featured Jobs Carousel */}
             <Featured />

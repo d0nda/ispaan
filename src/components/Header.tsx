@@ -68,10 +68,9 @@ export default async function Header() {
                         </Link>
                     </div>
                     <nav className="mx-6 flex-0 items-center space-x-4 lg:space-x-6 hidden md:block">
-                        {routes.map(({ id, title, url }) => (
-                            <Button asChild variant="ghost">
+                        {routes.map(({ id, url, title }) => (
+                            <Button asChild variant="ghost" key={id}>
                                 <Link
-                                    key={id}
                                     href={url}
                                     className="text-sm font-medium transition-colors"
                                 >

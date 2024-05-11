@@ -1,68 +1,84 @@
-import React from 'react';
-import useSWR from 'swr';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion";
-import { notFound, } from 'next/navigation'
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from '@/components/ui/accordion';
+import ReactMarkdown from 'react-markdown';
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const JobAccordion: React.FC = () => {
+  const [jobs, setJobs] = useState<any[]>([]);
 
-export default function JobAccordion() {
-    const { data: jobs, error } = useSWR('/api/job', fetcher);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          'https://jsearch.p.rapidapi.com/search',
+          {
+            params: {
+              query: 'jobs near me',
+              page: '1',
+              num_pages: '1',
+            },
+            headers: {
+              'X-RapidAPI-Key':
+                'b7963e919bmshbf3f432a97ca6b5p1d7b5ajsnbbd1bc987092',
+              'X-RapidAPI-Host': 'jsearch.p.rapidapi.com',
+            },
+          }
+        );
+        setJobs(response.data.data);
+      } catch (error) {
+        console.error('Error fetching job data:', error);
+      }
+    };
 
-    if (error) notFound()
-    if (!jobs) return <div>Loading...</div>;
+    fetchData();
+  }, []);
 
+  return (
+    <div>
+      <Accordion type="single" collapsible className="w-full">
+        {jobs.map((job) => (
+          <AccordionItem
+            key={job.job_id}
+            className="mb-5"
+            value={`item-${job.job_id}`}
+          >
+            <AccordionTrigger showApplyButton={true} applyLink={job.job_apply_link}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  {job.employer_logo && (
+                    <img
+                      src={job.employer_logo}
+                      alt={`${job.employer_name} Logo`}
+                      style={{ width: '50px', height: '50px' }}
+                    />
+                  )}
+                  <div>
+                    <h2>{job.job_title}</h2>
+                    {/*<p>Employer: {job.employer_name}</p>*/}
+                  </div>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="px-5 py-5 text-sm">
+                {job.job_description && (
+                  <>
+                    <ReactMarkdown>{job.job_description}</ReactMarkdown>
+                    <br /> {/* Add line break */}
+                  </>
+                )}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </div>
+  );
+};
 
-    return (
-        <div>
-            <Accordion type="single" collapsible>
-                {jobs.map((job: { id: React.Key | null | undefined; company_name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; job_title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; start_date: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; description: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; }) => (
-                    <AccordionItem
-                        key={job.id}
-                        value={`item-${job.id}`}
-                        className="mt-8 md:space-x-5 space-y-3 md:space-y-0 rounded-xl max-w-xs md:max-w-3xl mx-4 md:mx-auto bg-slate-300 dark:bg-white dark:bg-opacity-20 dark:backdrop-blur-md border border-opacity-30 border-black dark:border-white shadow-lg p-4 mb-5 cursor-pointer"
-                    >
-                        <AccordionTrigger>
-                            <div className="flex-shrink-0 w-10 h-10">
-                                <img
-                                    className="w-full h-full rounded-full"
-                                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-                                    alt=""
-                                />
-                            </div>
-                            <div className="ml-3">
-                                <p className="text-black dark:text-white whitespace-no-wrap">
-                                    {job.company_name}
-                                </p>
-                            </div>
-                            <div className="px-5 py-5 text-sm">
-                                <p className="text-black dark:text-white whitespace-no-wrap">
-                                    {job.job_title}
-                                </p>
-                            </div>
-                            <div className="px-5 py-5 text-sm">
-                                <p className="text-black dark:text-white whitespace-no-wrap">
-                                    {job.start_date}
-                                </p>
-                            </div>
-                            <div className="px-5 py-5 text-sm">
-                                <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                    <span
-                                        aria-hidden
-                                        className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                                    ></span>
-                                    <span className="relative">Apply</span>
-                                </span>
-                            </div>
-                        </AccordionTrigger>
-                        <AccordionContent>{job.description}</AccordionContent>
-                    </AccordionItem>
-                ))}
-            </Accordion>
-        </div>
-    );
-}
+export default JobAccordion;

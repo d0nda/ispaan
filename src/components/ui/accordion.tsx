@@ -1,8 +1,8 @@
 "use client"
-
 import * as React from "react"
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import { ChevronDown } from "lucide-react"
+import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 
@@ -20,24 +20,43 @@ const AccordionItem = React.forwardRef<
 ))
 AccordionItem.displayName = "AccordionItem"
 
-const AccordionTrigger = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+interface AccordionTriggerProps
+  extends React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> {
+  showApplyButton?: boolean;
+  applyLink?: string;
+}
+
+const AccordionTrigger: React.FC<AccordionTriggerProps> = ({
+  showApplyButton = false,
+  applyLink,
+  children,
+  ...props
+}) => (
   <AccordionPrimitive.Header className="flex">
     <AccordionPrimitive.Trigger
-      ref={ref}
+      {...props}
       className={cn(
         "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
-        className
+        props.className
       )}
-      {...props}
     >
-      {children}
-      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+      <div className="flex items-center space-x-4">
+        {children}
+        {/*<ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />}*/}
+      </div>
+      {showApplyButton && applyLink && (
+        <Link
+          href={applyLink}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Apply
+        </Link>
+      )}
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
-))
+)
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
 
 const AccordionContent = React.forwardRef<

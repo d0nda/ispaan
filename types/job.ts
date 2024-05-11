@@ -77,25 +77,6 @@ export enum JobCategory {
     Warehousing = 'Warehousing',
 };
 
-export type Job = {
-    id: string;
-    userId: string;
-    company_name: string;
-    job_title: string;
-    description: string;
-    salary?: string;
-    location?: string;
-    logo?: string;
-    employment: Employment;
-    category: JobCategory;
-    start_date: Date;
-    end_date?: Date;
-    created_at: Date;
-    is_hired?: boolean;
-    is_featured?: boolean;
-    price?: number;
-    created_by: User;
-};
 
 export type User = {
     id: string,
@@ -105,4 +86,21 @@ export type User = {
     image: string,
 
 };
+
+export interface FeaturedJob {
+    id: string;
+    category: string;
+    name: string;
+    company_name: string;
+    images: string[];
+    link: string;
+};
+
+export interface Job {
+    job_id: string;
+    job_title: string;
+    employer_name: string;
+    employer_logo: string;
+    job_apply_link: string;
+}
 
