@@ -2,9 +2,8 @@
 
 import React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
-import { FaFacebook, FaInstagram } from "react-icons/fa";
-import { FaTwitter, FaGithub } from "react-icons/fa6";
+import { FaFacebook } from "react-icons/fa";
+import { FaTwitter } from "react-icons/fa6";
 import Container from './ui/container';
 import { useTheme } from "next-themes"
 import { BsSun, BsMoonStars } from "react-icons/bs";
@@ -26,46 +25,26 @@ const Footer = () => {
                     </div>
                     <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
                         <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-                            <h2 className="title-font font-medium text-black dark:text-white tracking-widest text-md mb-3">Company</h2>
-                            <nav className="list-none mb-10">
-                                <li>
-                                    <Link href="#" className="text-black dark:text-white hover:opacity-75">About</Link>
-                                </li>
-                                <li>
-                                    <Link href="#" className="text-black dark:text-white hover:opacity-75">Meet the Team</Link>
-                                </li>
-                                <li>
-                                    <Link href="#" className="text-black dark:text-white hover:opacity-75">History</Link>
-                                </li>
-                                <li>
-                                    <Link href="#" className="text-black dark:text-white hover:opacity-75">Careers</Link>
-                                </li>
-                            </nav>
-                        </div>
-                        <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-                            <h2 className="title-font font-medium text-black dark:text-white tracking-widest text-md mb-3">Products</h2>
+                            <h2 className="title-font font-medium text-black dark:text-white tracking-widest text-md mb-3">Service</h2>
                             <nav className="list-none mb-10">
                                 <li>
                                     <Link href="#" className="text-black dark:text-white hover:opacity-75">Find Jobs</Link>
                                 </li>
-                                <li>
-                                    <Link href="#" className="text-black dark:text-white hover:opacity-75">Post a Job</Link>
-                                </li>
-
                             </nav>
                         </div>
                         <div className="lg:w-1/4 md:w-1/2 w-full px-4">
                             <h2 className="title-font font-medium text-black dark:text-white tracking-widest text-md mb-3">Helpful Links</h2>
                             <nav className="list-none mb-10">
+                            <li>
+                                    <Link href="#" className="text-black dark:text-white hover:opacity-75">About</Link>
+                                </li>
                                 <li>
                                     <Link href="#" className="text-black dark:text-white hover:opacity-75">Contact</Link>
                                 </li>
                                 <li>
                                     <Link href="#" className="text-black dark:text-white hover:opacity-75">FAQs</Link>
                                 </li>
-                                <li>
-                                    <Link href="#" className="text-black dark:text-white hover:opacity-75">Live Chat</Link>
-                                </li>
+                                
                             </nav>
                         </div>
                         <div className="lg:w-1/4 md:w-1/2 w-full px-4">
@@ -79,9 +58,6 @@ const Footer = () => {
                                 </li>
                                 <li>
                                     <Link href="#" className="text-black dark:text-white hover:opacity-75">Privacy Policy</Link>
-                                </li>
-                                <li>
-                                    <Link href="#" className="text-black dark:text-white hover:opacity-75">Accessibility</Link>
                                 </li>
                             </nav>
                         </div>
@@ -97,12 +73,7 @@ const Footer = () => {
                         <a className="ml-3 text-black dark:text-white">
                             <FaTwitter size={25} />
                         </a>
-                        <a className="ml-3 text-black dark:text-white">
-                            <FaInstagram size={25} />
-                        </a>
-                        <a className="ml-3 text-black dark:text-white">
-                            <FaGithub size={25} />
-                        </a>
+
                     </span>
                     <p className="text-black dark:text-white text-md text-center sm:text-center mx-auto">© 2024 ispaan.com
                     </p>

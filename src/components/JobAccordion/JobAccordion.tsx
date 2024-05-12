@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   Accordion,
@@ -7,9 +7,11 @@ import {
   AccordionContent,
 } from '@/components/ui/accordion';
 import ReactMarkdown from 'react-markdown';
+import Loading from './Loading'; // Import the Loading component
 
 const JobAccordion: React.FC = () => {
   const [jobs, setJobs] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true); // State to manage loading status
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,12 +26,13 @@ const JobAccordion: React.FC = () => {
             },
             headers: {
               'X-RapidAPI-Key':
-                'b7963e919bmshbf3f432a97ca6b5p1d7b5ajsnbbd1bc987092',
+              'b7963e919bmshbf3f432a97ca6b5p1d7b5ajsnbbd1bc987092',
               'X-RapidAPI-Host': 'jsearch.p.rapidapi.com',
             },
           }
         );
         setJobs(response.data.data);
+        setIsLoading(false); // Set loading to false after data is fetched
       } catch (error) {
         console.error('Error fetching job data:', error);
       }
@@ -37,6 +40,17 @@ const JobAccordion: React.FC = () => {
 
     fetchData();
   }, []);
+
+  if (isLoading) {
+    // Render ten instances of the Loading component while data is being fetched
+    return (
+      <div>
+        {[...Array(10)].map((_, index) => (
+          <Loading key={index} />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -51,6 +65,7 @@ const JobAccordion: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   {job.employer_logo && (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={job.employer_logo}
                       alt={`${job.employer_name} Logo`}

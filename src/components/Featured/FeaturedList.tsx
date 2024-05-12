@@ -1,6 +1,6 @@
 import React from 'react';
 import FeaturedCard from "@/components/ui/FeaturedCard";
-import { Job } from "../../types/job";
+import { Job } from "../../../types/job";
 
 interface FeaturedListProps {
     items: Job[];

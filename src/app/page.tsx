@@ -2,15 +2,11 @@
 
 import Container from "@/components/ui/container";
 import { MdEmail } from "react-icons/md";
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import Category from "@/components/Category";
-import Featured from "@/components/Featured";
-import JobAccordion from "@/components/JobAccordion";
+import Featured from "@/components/Featured/Featured";
+import JobAccordion from "@/components/JobAccordion/JobAccordion";
+import Search from "@/components/Search";
 
-interface ErrorResponse {
-  message: string;
-}
 
 export default function Home() {
   return (
@@ -26,10 +22,8 @@ export default function Home() {
             <h3 className="mb-8 text-sm text-black dark:text-white md:text-lg">
               Your Career starts here...
             </h3>
-            <div className="mb-8 flex w-full mx-auto max-w-sm items-center space-x-2">
-              <Input type="search" placeholder="Search" />
-              <Button type="submit">Search</Button>
-            </div>
+            {/* Search Bar */}
+            <Search />
           </div>
         </div>
       </section>
