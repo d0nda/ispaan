@@ -16,8 +16,8 @@ export default function JobsByCategory({ params }: { params: { category: JobCate
     }
 
     // Fetch jobs based on the selected category
-    const { data: jobs, error } = useSWR(`/api/job/category/${category}`, fetcher);
-    console.log("Jobs by Cat: ", jobs)
+    //const { data: jobs, error } = useSWR(`/api/job/category/${category}`, fetcher);
+    //console.log("Jobs by Cat: ", jobs)
 
     // ... (error handling)
 
@@ -25,14 +25,14 @@ export default function JobsByCategory({ params }: { params: { category: JobCate
         <div>
             <h1>Jobs in {category}</h1>
 
-            {jobs && (
+            {/*{jobs && (
                 <ul>
                     {jobs.map((job: Job) => (
                         <li key={job.id}>{job.job_title}</li>
                         // Display other job information as needed
                     ))}
                 </ul>
-            )}
+            )}*/}
         </div>
     );
 }
