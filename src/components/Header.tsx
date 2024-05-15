@@ -1,10 +1,8 @@
 import Link from "next/link"
-import Image from "next/image"
 import Container from "./ui/container"
 import { Button } from "./ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { BiMenu } from "react-icons/bi";
-import { useTheme } from "next-themes"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import ProfileButton from "./ui/ProfileButton";

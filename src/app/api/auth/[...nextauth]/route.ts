@@ -1,14 +1,13 @@
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
-import GithubProvider from 'next-auth/providers/github';
 import bcrypt from 'bcrypt';
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import prisma from '../../../../lib/prisma';
+import prisma from '@/lib/prisma';
 
 
 const authOptions: AuthOptions = {
-
+     // @ts-ignore
     adapter: PrismaAdapter(prisma),
     //debug: process.env.NODE_ENV === "development",
     providers: [
@@ -16,6 +15,7 @@ const authOptions: AuthOptions = {
             id: 'credentials',
             name: 'Credentials',
 
+             // @ts-ignore
             async authorize(credentials) {
 
                 //Check to see if email and password is valid
@@ -47,10 +47,6 @@ const authOptions: AuthOptions = {
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-        }),
-        GithubProvider({
-            clientId: process.env.GITHUB_ID as string,
-            clientSecret: process.env.GITHUB_SECRET as string,
         }),
     ],
     callbacks: {
