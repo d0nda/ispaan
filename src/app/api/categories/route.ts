@@ -15,6 +15,6 @@ export const GET = async () => {
         return NextResponse.json(categories)
     } catch (error) {
         console.error("Error getting job categories:", error);
-        return new NextResponse({ error: "Internal Server Error" }, { status: 500 });
+        return NextResponse.json({ message: 'Internal server error',error })
     }
 }

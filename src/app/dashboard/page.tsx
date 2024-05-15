@@ -1,13 +1,14 @@
 import React from 'react';
 import styles from './page.module.css';
 import Image from 'next/image';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+//import { getServerSession } from 'next-auth';
+//import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { getAuthSession } from '@/lib/auth'
 //import { useSession } from 'next-auth/react'; //if you want to use client side
 
 async function Dashboard() {
-    const session = await getServerSession(authOptions);
-    //const { data: session, status } = useSession()
+    const session = await getAuthSession();
+    //const { data: session, status } = useSession(),
     const image = session?.user?.image ?? '';
     console.log("useSession Hook session object", session)
 

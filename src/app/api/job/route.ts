@@ -10,6 +10,6 @@ export const GET = async () => {
         return NextResponse.json(jobs);
     } catch (error) {
         console.error("Error getting jobs by category:", error);
-        return new NextResponse(`{ error: "Internal Server Error" }`, { status: 500 });
+        return NextResponse.json({ message: 'Internal server error',error });
     }
 };

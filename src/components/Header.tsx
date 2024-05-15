@@ -3,14 +3,15 @@ import Container from "./ui/container"
 import { Button } from "./ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { BiMenu } from "react-icons/bi";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
+//import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+//import { getServerSession } from "next-auth";
+import { getAuthSession } from '@/lib/auth'
 import ProfileButton from "./ui/ProfileButton";
 
 
 
 export default async function Header() {
-    const session = await getServerSession(authOptions);
+    const session = await getAuthSession();
     //"use client" : const { data: session, status } = useSession()
     console.log("useSession Hook session object", session)
 
