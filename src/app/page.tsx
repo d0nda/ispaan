@@ -2,7 +2,7 @@
 
 import Container from "@/components/ui/container";
 import { MdEmail } from "react-icons/md";
-import Category from "@/components/Category";
+import Category from "@/components/Category/Category";
 import Featured from "@/components/Featured/Featured";
 import JobAccordion from "@/components/JobAccordion/JobAccordion";
 import Search from "@/components/Search";
