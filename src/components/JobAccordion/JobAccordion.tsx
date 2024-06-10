@@ -25,8 +25,7 @@ const JobAccordion: React.FC = () => {
               num_pages: '1',
             },
             headers: {
-              'X-RapidAPI-Key':
-              process.env.RAPID_API_KEY as string,
+              'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY,
               'X-RapidAPI-Host': 'jsearch.p.rapidapi.com',
             },
           }

@@ -16,11 +16,11 @@ export default function Search() {
           query: query,
         },
         headers: {
-          'X-RapidAPI-Key': 'b7963e919bmshbf3f432a97ca6b5p1d7b5ajsnbbd1bc987092',
+          'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY,
           'X-RapidAPI-Host': 'jsearch.p.rapidapi.com',
         },
       });
-      console.log(`Searchbar results: ${response.data.data}`); // Log the response data
+      console.log(`Searchbar results: ${response.data.data}`); 
       setSearchResults(response.data.data);
     } catch (error) {
       console.error('Error fetching job data:', error);
