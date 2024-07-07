@@ -31,6 +31,11 @@ const JobAccordion: React.FC = () => {
     fetchData();
   }, []);
 
+  const handleApplyClick = (jobId: string) => {
+    const decodedJobId = decodeURIComponent(jobId); // Decode jobId if it's URL encoded
+    router.push(`/jobs/${decodedJobId}`);
+  };
+
   if (isLoading) {
     return (
       <div>
@@ -40,10 +45,6 @@ const JobAccordion: React.FC = () => {
       </div>
     );
   }
-
-  const handleApplyClick = (jobId: string) => {
-    router.push(`/jobs/${jobId}`);
-  };
 
   return (
     <div>
@@ -67,7 +68,6 @@ const JobAccordion: React.FC = () => {
                   )}
                   <div>
                     <h2>{job.job_title}</h2>
-                    {/*<p>Employer: {job.employer_name}</p>*/}
                   </div>
                 </div>
               </div>
@@ -77,16 +77,16 @@ const JobAccordion: React.FC = () => {
                 {job.job_description && (
                   <>
                     <ReactMarkdown>{job.job_description}</ReactMarkdown>
-                    <br /> {/* Add line break */}
+                    <br />
                   </>
                 )}
               </div>
               <button
-                      onClick={() => handleApplyClick(job.job_id)}
-                      className="mt-2 p-2 bg-red-500 text-white rounded"
-                    >
-                      Apply
-                    </button>
+                onClick={() => handleApplyClick(job.job_id)}
+                className="mt-2 p-2 bg-red-500 text-white rounded"
+              >
+                Apply
+              </button>
             </AccordionContent>
           </AccordionItem>
         ))}

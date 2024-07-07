@@ -1,40 +1,33 @@
-// src/app/jobs/[jobId]/page.tsx
-"use client";
-
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import React from 'react';
 import { getJobDetails } from '@/app/api/jsearch/route';
-import { JobDetails, JobDetailsResponse } from '../../../../types/job';
+import { JobDetailsResponse } from '../../../../types/job';
 
-const JobDetailsPage: React.FC = () => {
-  const { jobId } = useParams();
-  const [jobPreview, setJobDetails] = useState<JobDetailsResponse | null>(); //JobDetailsResponse | null>(null) | any[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  
-  useEffect(() => {
-    console.log('Job ID:', jobId); 
-    if (typeof jobId === 'string') {
-        const fetchJobDetails = async () => {
-          try {
-            const response: JobDetailsResponse = await getJobDetails(jobId, {
-              extended_publisher_details: 'true'
-            });
-            console.log('API Response:', response); 
-            setJobDetails(response);
-            setIsLoading(false);
-          } catch (error) {
-            console.error('Error fetching job details:', error);
-            setIsLoading(false);
-          }
-      };
+interface JobDetailsPageProps {
+  params: {
+    jobId: string;
+  };
+}
 
-      fetchJobDetails();
-    }
-  }, [jobId]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
+const fetchJobDetails = async (jobId: string) => {
+  try {
+    console.log('Fetching job details for Job ID:', jobId); // Debugging statement
+    const response: JobDetailsResponse = await getJobDetails(jobId, {
+      extended_publisher_details: 'true',
+    });
+    console.log('API Response:', response); // Debugging statement
+    return response;
+  } catch (error) {
+    console.error('Error fetching job details:', error);
+    return null;
   }
+};
+
+export default async function JobDetailsPage({ params: { jobId } }: JobDetailsPageProps) {
+  jobId = decodeURIComponent(jobId); // Decode jobId if it's URL encoded
+  console.log('Decoded Job ID:', jobId); // Debugging statement
+  const jobPreview = await fetchJobDetails(jobId);
+
+  console.log('Job Preview:', jobPreview); // Debugging statement
 
   if (!jobPreview) {
     return <div>No job details found.</div>;
@@ -43,6 +36,7 @@ const JobDetailsPage: React.FC = () => {
   return (
     <div>
       <h1>{jobPreview.job_title}</h1>
+      <h1>Job ID: {jobPreview.job_id}</h1>
       <p>Employer: {jobPreview.employer_name}</p>
       {jobPreview.employer_logo && (
         // eslint-disable-next-line @next/next/no-img-element
@@ -52,6 +46,4 @@ const JobDetailsPage: React.FC = () => {
       <p>{jobPreview.job_description}</p>
     </div>
   );
-};
-
-export default JobDetailsPage;
+}
