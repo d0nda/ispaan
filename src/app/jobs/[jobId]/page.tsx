@@ -1,6 +1,6 @@
-import React from 'react';
-import { getJobDetails } from '@/app/api/jsearch/route';
-import { JobDetailsResponse } from '../../../../types/job';
+"use client"
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 interface JobDetailsPageProps {
   params: {
@@ -8,42 +8,57 @@ interface JobDetailsPageProps {
   };
 }
 
-const fetchJobDetails = async (jobId: string) => {
-  try {
-    console.log('Fetching job details for Job ID:', jobId); // Debugging statement
-    const response: JobDetailsResponse = await getJobDetails(jobId, {
-      extended_publisher_details: 'true',
-    });
-    console.log('API Response:', response); // Debugging statement
-    return response;
-  } catch (error) {
-    console.error('Error fetching job details:', error);
-    return null;
+const JobDetailsPage: React.FC<JobDetailsPageProps> = ({ params: { jobId } }) => {
+  const [jobDetails, setJobDetails] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchJobDetails = async () => {
+      try {
+        const decodedJobId = decodeURIComponent(jobId); // Decode the job ID
+        console.log(`Fetching details for job ID: ${decodedJobId}`); // Debugging statement
+        const response = await axios.get(`https://jsearch.p.rapidapi.com/job-details`, {
+          params: {
+            job_id: decodedJobId
+          },
+          headers: {
+            'x-rapidapi-host': 'jsearch.p.rapidapi.com',
+            'x-rapidapi-key': process.env.NEXT_PUBLIC_RAPID_API_KEY
+          }
+        });
+        console.log('Job details fetched:', response.data.data[0]); // Debugging statement
+        setJobDetails(response.data.data[0]); // Assuming the data is an array
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching job details:', error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchJobDetails();
+  }, [jobId]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
-};
 
-export default async function JobDetailsPage({ params: { jobId } }: JobDetailsPageProps) {
-  jobId = decodeURIComponent(jobId); // Decode jobId if it's URL encoded
-  console.log('Decoded Job ID:', jobId); // Debugging statement
-  const jobPreview = await fetchJobDetails(jobId);
-
-  console.log('Job Preview:', jobPreview); // Debugging statement
-
-  if (!jobPreview) {
+  if (!jobDetails) {
     return <div>No job details found.</div>;
   }
 
   return (
     <div>
-      <h1>{jobPreview.job_title}</h1>
-      <h1>Job ID: {jobPreview.job_id}</h1>
-      <p>Employer: {jobPreview.employer_name}</p>
-      {jobPreview.employer_logo && (
+      <h1>{jobDetails.job_title}</h1>
+      <h2>Job ID: {jobDetails.job_id}</h2>
+      <p>Employer: {jobDetails.employer_name}</p>
+      {jobDetails.employer_logo && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={jobPreview.employer_logo} alt={`${jobPreview.employer_name} Logo`} style={{ width: '100px', height: '100px' }} />
+        <img src={jobDetails.employer_logo} alt={`${jobDetails.employer_name} Logo`} style={{ width: '100px', height: '100px' }} />
       )}
-      <p>Website: {jobPreview.employer_website ? <a href={jobPreview.employer_website}>{jobPreview.employer_website}</a> : 'No website available'}</p>
-      <p>{jobPreview.job_description}</p>
+      <p>Website: {jobDetails.employer_website ? <a href={jobDetails.employer_website}>{jobDetails.employer_website}</a> : 'No website available'}</p>
+      <p>{jobDetails.job_description}</p>
     </div>
   );
-}
+};
+
+export default JobDetailsPage;

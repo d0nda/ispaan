@@ -194,6 +194,7 @@ export interface Job {
   }
 
 export interface JobDetails {
+  
   employer_name: string;
   employer_logo: string;
   employer_website: string;
@@ -237,6 +238,7 @@ export interface JobDetails {
   estimated_salaries: any[];
   apply_options: any[];
   employer_reviews: EmployerReview[];
+  
 }
 
 export type JobDetailsResponse = JobDetails;
