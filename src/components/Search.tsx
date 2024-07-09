@@ -29,7 +29,7 @@ export default function Search() {
     setIsLoading(true);
 
     try {
-      const response = await axios.get('https://jsearch.p.rapidapi.com/search-filters', {
+      const response = await axios.get('https://jsearch.p.rapidapi.com/search', {
         params: { query },
         headers: {
           'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY,
@@ -37,12 +37,9 @@ export default function Search() {
         },
       });
 
-      console.log('Full API Response:', response);
       if (response.data.data) {
-        console.log('API Response Data:', response.data.data);
-        setSearchResults(response.data.data.job_titles); // Use job_titles for demo, you can add others
+        setSearchResults(response.data.data);
       } else {
-        console.error('Invalid API response format:', response.data);
         setSearchResults([]);
       }
     } catch (error) {
@@ -100,11 +97,10 @@ export default function Search() {
             ) : (
               searchResults.length > 0 ? (
                 <div>
-                  <h3>Job Titles</h3>
-                  {searchResults.map((jobTitle: any, index: number) => (
+                  {searchResults.map((job: any, index: number) => (
                     <div key={index}>
-                      <Link href={`/search/${jobTitle.value}`} passHref>
-                        {jobTitle.name} ({jobTitle.est_count})
+                      <Link href={`/search/${encodeURIComponent(job.job_id)}`} passHref>
+                        {job.job_title} - {job.company_name}
                       </Link>
                     </div>
                   ))}

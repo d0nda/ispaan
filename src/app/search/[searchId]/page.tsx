@@ -10,52 +10,47 @@ interface SearchDetailsPageProps {
 }
 
 const SearchDetailsPage: React.FC<SearchDetailsPageProps> = ({ params: { searchId } }) => {
-  const [searchDetails, setSearchDetails] = useState<any>(null);
+  const [jobDetails, setJobDetails] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchSearchDetails = async () => {
+    const fetchJobDetails = async () => {
       try {
         const decodedSearchId = decodeURIComponent(searchId);
-        const response = await axios.get('https://jsearch.p.rapidapi.com/search', {
-          params: { query: decodedSearchId },
+        const response = await axios.get('https://jsearch.p.rapidapi.com/job-details', {
+          params: { job_id: decodedSearchId },
           headers: {
             'x-rapidapi-host': 'jsearch.p.rapidapi.com',
             'x-rapidapi-key': process.env.NEXT_PUBLIC_RAPID_API_KEY,
           },
         });
 
-        setSearchDetails(response.data.data);
+        setJobDetails(response.data.data[0]);
         setIsLoading(false);
       } catch (error) {
-        console.error('Error fetching search details:', error);
+        console.error('Error fetching job details:', error);
         setIsLoading(false);
       }
     };
 
-    fetchSearchDetails();
+    fetchJobDetails();
   }, [searchId]);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (!searchDetails) {
-    return <div>Search details not found</div>;
+  if (!jobDetails) {
+    return <div>Job details not found</div>;
   }
 
   return (
     <div>
-      <h1>Search Results for `{searchId}`</h1>
-      <ul>
-        {searchDetails.data && searchDetails.data.map((item: any, index: number) => (
-          <li key={index}>
-            <Link href={`/search/${encodeURIComponent(item.id)}`} passHref>
-              {item.title} - {item.company}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <h1>{jobDetails.job_title}</h1>
+      <p>Company: {jobDetails.company_name}</p>
+      <p>Location: {jobDetails.job_location}</p>
+      <p>Job Description: {jobDetails.job_description}</p>
+      <Link href="/">Back to Search</Link>
     </div>
   );
 };
