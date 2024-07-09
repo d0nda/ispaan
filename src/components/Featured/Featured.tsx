@@ -3,31 +3,26 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import FeaturedList from './FeaturedList';
-import Loading from './Loading'; // Import the Loading component
-import { Job } from "../../../types/job";
+import Loading from './Loading'; 
+// import { Job } from "../../../types/job";
+import { searchJobs } from '@/app/api/jsearch/route';
+import { SearchJobsResponse } from '../../../types/job';
 
 export default function Featured() {
-    const [latestJobs, setLatestJobs] = useState<Job[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true); // State to manage loading status
+    const [latestJobs, setLatestJobs] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true); 
 
     useEffect(() => {
         const fetchLatestJobs = async () => {
             try {
-                const response = await axios.get('https://jsearch.p.rapidapi.com/search', {
-                    params: {
-                        query: 'jobs near me',
-                        page: '1',
-                        num_pages: '1',
-                    },
-                    headers: {
-                        'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY,
-                        'X-RapidAPI-Host': 'jsearch.p.rapidapi.com',
-                    },
-                });
-                setLatestJobs(response.data.data); // Update state with latest jobs data
-                setIsLoading(false); // Set loading to false after data is fetched
+                console.log('Fetching jobs...');
+                const response: SearchJobsResponse = await searchJobs('jobs near me', { page: '1', num_pages: '1' });
+                console.log('Jobs fetched:', response.data);
+                setLatestJobs(response.data);
+                setIsLoading(false);
             } catch (error) {
-                console.error('Error fetching latest jobs:', error);
+                console.error('Error fetching jobs:', error);
+                setIsLoading(false);
             }
         };
 
@@ -38,13 +33,17 @@ export default function Featured() {
     const limitedJobs = latestJobs.slice(0, 5);
 
     if (isLoading) {
-        // Render three instances of the Loading component while data is being fetched
         return (
             <div className="flex flex-col gap-x-8 sm:gap-x-0 sm:flex-row gap-y-8 px-4 sm:px-6 lg:px-8">
                 <div className="mt-11 mb-8 mx-auto space-x-4 sm:space-x-8 sm:space-y-0 sm:flex flex-row">
-                {[...Array(3)].map((_, index) => (
-                    <Loading key={index} />
-                ))}
+                    <div className="block sm:hidden">
+                        <Loading />
+                    </div>
+                    <div className="hidden sm:flex flex-row space-x-4">
+                        {[...Array(3)].map((_, index) => (
+                            <Loading key={index} />
+                        ))}
+                    </div>
                 </div>
             </div>
         );

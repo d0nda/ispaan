@@ -30,7 +30,10 @@ export default function Home() {
       <Container>
 
         {/* Category badge */}
+        <Container>
         <Category />
+        </Container>
+        
 
         {/* Featured Jobs */}
         <section className="mb-8 p-4" >

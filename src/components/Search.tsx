@@ -1,50 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Input } from '@/components/ui/input';
-import axios from 'axios';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { CiSearch } from 'react-icons/ci';
+import axios from 'axios';
+import Link from 'next/link';
 
 export default function Search() {
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<any>(null); // Updated to any since data contains multiple arrays
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const query = searchParams.get('query') || '';
+    setSearchQuery(query);
+    if (query) {
+      fetchData(query);
+    }
+  }, [searchParams]);
 
   const fetchData = async (query: string) => {
     if (!query) {
-      // Clear search results when query is empty
-      setSearchResults(null);
+      setSearchResults([]);
       return;
     }
-  
+
     setIsLoading(true);
-  
+
     try {
       const response = await axios.get('https://jsearch.p.rapidapi.com/search-filters', {
-        params: {
-          query: query,
-        },
+        params: { query },
         headers: {
           'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY,
           'X-RapidAPI-Host': 'jsearch.p.rapidapi.com',
         },
       });
-  
+
       console.log('Full API Response:', response);
-      if (response.data && response.data.data) {
+      if (response.data.data) {
         console.log('API Response Data:', response.data.data);
-        setSearchResults(response.data.data);
+        setSearchResults(response.data.data.job_titles); // Use job_titles for demo, you can add others
       } else {
         console.error('Invalid API response format:', response.data);
-        setSearchResults(null);
+        setSearchResults([]);
       }
     } catch (error) {
       console.error('Error fetching job data:', error);
-      setSearchResults(null);
+      setSearchResults([]);
     } finally {
       setIsLoading(false);
     }
   };
-  
 
   const handleSearch = () => {
     fetchData(searchQuery);
@@ -67,15 +74,12 @@ export default function Search() {
             onKeyDown={handleKeyDown}
             value={searchQuery}
           />
-          <button
-            onClick={handleSearch}
-            className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-auto"
-          >
+          <button onClick={handleSearch} className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-auto">
             <CiSearch size={30} />
           </button>
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="max-w-screen-sm mx-auto sm:max-w-[425px]">
         <DialogHeader>
           <div className="mb-8 relative w-[300px] mx-auto max-w-sm">
             <Input
@@ -85,10 +89,7 @@ export default function Search() {
               onKeyDown={handleKeyDown}
               value={searchQuery}
             />
-            <button
-              onClick={handleSearch}
-              className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-auto"
-            >
+            <button onClick={handleSearch} className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-auto">
               <CiSearch size={30} />
             </button>
           </div>
@@ -97,24 +98,19 @@ export default function Search() {
             {isLoading ? (
               <p>Loading...</p>
             ) : (
-              searchResults ? (
+              searchResults.length > 0 ? (
                 <div>
                   <h3>Job Titles</h3>
-                  {searchResults.job_titles.slice(0, 5).map((jobTitle: any, index: number) => (
+                  {searchResults.map((jobTitle: any, index: number) => (
                     <div key={index}>
-                      <p>{jobTitle.name} ({jobTitle.est_count})</p>
+                      <Link href={`/jobs/${jobTitle.value}`} passHref>
+                        {jobTitle.name} ({jobTitle.est_count})
+                      </Link>
                     </div>
                   ))}
-                  <h3>Employers</h3>
-                  {searchResults.employers.slice(0, 5).map((employer: any, index: number) => (
-                    <div key={index}>
-                      <p>{employer.name} ({employer.est_count})</p>
-                    </div>
-                  ))}
-                  {/* You can add similar sections for categories, company_types, etc. */}
                 </div>
               ) : (
-                <p>No recent searches.</p>
+                <p>No jobs found.</p>
               )
             )}
           </DialogDescription>

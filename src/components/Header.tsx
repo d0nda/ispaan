@@ -6,14 +6,14 @@ import { BiMenu } from "react-icons/bi";
 //import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 //import { getServerSession } from "next-auth";
 import { getAuthSession } from '@/lib/auth'
-import ProfileButton from "./ui/ProfileButton";
+//import ProfileButton from "./ui/ProfileButton";
 
 
 
 export default async function Header() {
-    const session = await getAuthSession();
+    //const session = await getAuthSession();
     //"use client" : const { data: session, status } = useSession()
-    console.log("useSession Hook session object", session)
+    //console.log("useSession Hook session object", session)
 
     const routes = [
         {
@@ -78,20 +78,20 @@ export default async function Header() {
                             </Button>
                         ))}
                     </nav>
-                    <div className="flex items-center">
-                        {session && (
+                    {/*<div className="flex items-center">*/}
+                        {/*session && (
                             <>
                                 <ProfileButton />
                             </>
-                        )}
+                        )*/}
                         {/* Only show the sign in and get started links if the user is not logged in */}
-                        {!session && (
+                        {/*!session && (
                             <Button>
                                 <Link href="/signin">Sign in</Link>
                             </Button>
-                        )}
+                        )*/}
 
-                    </div>
+                    {/*</div>*/}
                 </div>
             </Container>
         </header>

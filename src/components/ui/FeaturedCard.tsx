@@ -14,6 +14,7 @@ const FeaturedCard: React.FC<FeaturedCard> = ({ data }) => {
         <Card className="h-full">
           <CardContent className="p-0">
             <div className="relative h-60 w-full">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 className="rounded-t-lg"
                 src={data.images?.[0]}

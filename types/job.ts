@@ -159,17 +159,7 @@ export interface Job {
     data: Job[];
   }
   
-  export interface SearchFiltersResponse {
-    data: {
-      categories: { name: string; value: string; est_count: number }[];
-      job_titles: { name: string; value: string; est_count: number }[];
-      company_types: { name: string; value: string; est_count: number }[];
-      employers: { name: string; value: string; est_count: number }[];
-      date_posted: { name: string; value: string; est_count: number }[];
-      employment_types: { name: string; value: string; est_count: number }[];
-      job_requirements: { name: string; value: string; est_count: number }[];
-    };
-  }
+
   
   export interface JobRequiredExperience {
     required_experience_in_months: number;
@@ -256,40 +246,59 @@ export interface EstimatedSalaryResponse {
       salary_currency: string;
     }[];
 }
-
-  export interface JobRequiredExperience {
-    no_experience_required: boolean;
-    required_experience_in_months: number;
-    experience_mentioned: boolean;
-    experience_preferred: boolean;
+  
+// search Filter
+export interface SearchFiltersResponse {
+    categories: Category[];
+    job_titles: JobTitle[];
+    company_types: CompanyType[];
+    employers: Employer[];
+    date_posted: DatePosted[];
+    employment_types: EmploymentType[];
+    job_requirements: JobRequirement[];
+}
+  
+export interface Category {
+    name: string;
+    value: string;
+    est_count: number;
+}
+  
+export interface JobTitle {
+    name: string;
+    value: string;
+    est_count: number;
+}
+  
+export interface CompanyType {
+    name: string;
+    value: string;
+    est_count: number;
+}
+  
+export interface Employer {
+    name: string;
+    value: string;
+    est_count: number;
+}
+  
+export interface DatePosted {
+    name: string;
+    value: string;
+    est_count: number;
+}
+  
+export interface EmploymentType {
+    name: string;
+    value: string;
+    est_count: number;
   }
   
-  export interface JobRequiredEducation {
-    postgraduate_degree: boolean;
-    professional_certification: boolean;
-    high_school: boolean;
-    associates_degree: boolean;
-    bachelors_degree: boolean;
-    degree_mentioned: boolean;
-    degree_preferred: boolean;
-    professional_certification_mentioned: boolean;
-  }
-  
-  export interface JobHighlights {
-    Qualifications: string[];
-  }
-  
-  export interface EmployerReview {
-    publisher: string;
-    employer_name: string;
-    score: number;
-    num_stars: number;
-    review_count: number;
-    max_score: number;
-    reviews_link: string;
-  }
-  
-
+export interface JobRequirement {
+    name: string;
+    value: string;
+    est_count: number;
+}
 
 
 

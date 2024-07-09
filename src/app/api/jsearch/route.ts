@@ -38,6 +38,7 @@ export const searchFilters = async (query: string, options: Record<string, any> 
     const response: AxiosResponse<SearchFiltersResponse> = await api.get('https://jsearch.p.rapidapi.com/search-filters', {
       params: {
         query,
+        date_posted: 'all',
         ...options
       }
     });
