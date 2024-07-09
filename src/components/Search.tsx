@@ -103,7 +103,7 @@ export default function Search() {
                   <h3>Job Titles</h3>
                   {searchResults.map((jobTitle: any, index: number) => (
                     <div key={index}>
-                      <Link href={`/jobs/${jobTitle.value}`} passHref>
+                      <Link href={`/search/${jobTitle.value}`} passHref>
                         {jobTitle.name} ({jobTitle.est_count})
                       </Link>
                     </div>
