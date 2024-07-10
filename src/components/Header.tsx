@@ -6,17 +6,10 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { BiMenu } from "react-icons/bi";
 import { useTheme } from "next-themes"
 import { BsSun, BsMoonStars } from "react-icons/bs";
-//import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-//import { getServerSession } from "next-auth";
-//import { getAuthSession } from '@/lib/auth'
-//import ProfileButton from "./ui/ProfileButton";
-
 
 
 export default function Header() {
-    //const session = await getAuthSession();
-    //"use client" : const { data: session, status } = useSession()
-    //console.log("useSession Hook session object", session)
+    
     const { theme, setTheme } = useTheme();
     const routes = [
         {
@@ -84,18 +77,6 @@ export default function Header() {
                             <BsMoonStars className="absolute h-6 w-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                             <span className="sr-only">Toggle Theme</span>
                         </Button>
-                        {/*session && (
-                            <>
-                                <ProfileButton />
-                            </>
-                        )*/}
-                        {/* Only show the sign in and get started links if the user is not logged in */}
-                        {/*!session && (
-                            <Button>
-                                <Link href="/signin">Sign in</Link>
-                            </Button>
-                        )*/}
-
                     </div>
                 </div>
             </Container>

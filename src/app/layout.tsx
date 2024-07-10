@@ -4,7 +4,6 @@ import './globals.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-//import { AuthProvider } from '@/components/AuthProvider'
 import * as dotenv from 'dotenv';
 dotenv.config();
 

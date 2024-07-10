@@ -20,7 +20,7 @@ export default function Home() {
               <span>Connecting you to your next job opportunity.</span>
             </h1>
             <h3 className="mb-8 text-sm text-black dark:text-white md:text-lg">
-              Your Career starts here...
+              Your Search starts here...
             </h3>
             {/* Search Bar */}
             <Search />
