@@ -1,5 +1,6 @@
 "use client"
 
+import React, { Suspense } from 'react';
 import Container from "@/components/ui/container";
 import { MdEmail } from "react-icons/md";
 //import Category from "@/components/Category/Category";
@@ -22,8 +23,9 @@ export default function Home() {
             <h3 className="mb-8 text-sm text-black dark:text-white md:text-lg">
               Your Search starts here...
             </h3>
-            {/* Search Bar */}
-            <Search />
+            <Suspense fallback={<div>Loading...</div>}>
+              <Search />
+            </Suspense>
           </div>
         </div>
       </section>
