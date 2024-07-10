@@ -12,7 +12,7 @@ const FeaturedList: React.FC<FeaturedListProps> = ({ items }) => {
         category: '', 
         name: job.job_title,
         company_name: job.employer_name,
-        images: [job.employer_logo], 
+        images: job.employer_logo ? [job.employer_logo] : [], 
         link: job.job_apply_link,
     }));
 
