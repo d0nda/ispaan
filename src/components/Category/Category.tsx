@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Badge } from "@/components/ui/badge";
 import Loading from "@/components/Category/Loading";
-import { searchJobs } from '@/app/api/jsearch/route';
+import { searchJobs } from '@/lib/jsearch';
 import { SearchJobsResponse } from '../../../types/job';
 
 const Category: React.FC = () => {

@@ -2,7 +2,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import Loading from '@/components/Category/Loading';
-import { searchJobs } from '@/app/api/jsearch/route';
+import { searchJobs } from '@/lib/jsearch';
 import { SearchJobsResponse } from '../../../types/job';
 
 interface CategoryJobListProps {

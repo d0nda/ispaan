@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Loading from './Loading';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
 import ReactMarkdown from 'react-markdown';
-import { searchJobs } from '@/app/api/jsearch/route';
+import { searchJobs } from '@/lib/jsearch';
 import { SearchJobsResponse } from '../../../types/job';
 
 const JobAccordion: React.FC = () => {

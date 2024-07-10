@@ -3,7 +3,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import FeaturedList from './FeaturedList';
 import Loading from './Loading'; 
 // import { Job } from "../../../types/job";
-import { searchJobs } from '@/app/api/jsearch/route';
+import { searchJobs } from '@/lib/jsearch';
 import { SearchJobsResponse } from '../../../types/job';
 
 export default function Featured() {
