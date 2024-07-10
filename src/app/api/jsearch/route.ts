@@ -1,37 +1,44 @@
-
-import { NextApiRequest, NextApiResponse } from 'next';
+//api/jsearch/route.ts
+// api/jsearch/route.ts
+import { NextRequest, NextResponse } from 'next/server';
 import { searchJobs, searchFilters, getJobDetails, getEstimatedSalary } from '../../../lib/jsearch';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { action } = req.query;
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const action = searchParams.get('action');
 
   try {
     switch (action) {
       case 'searchJobs':
-        const { query, options } = req.query;
+        const query = searchParams.get('query');
+        const options = JSON.parse(searchParams.get('options') || '{}');
         const jobsResponse = await searchJobs(query as string, options as Record<string, any>);
-        return res.status(200).json(jobsResponse);
+        return NextResponse.json(jobsResponse);
 
       case 'searchFilters':
-        const { filtersQuery, filtersOptions } = req.query;
+        const filtersQuery = searchParams.get('filtersQuery');
+        const filtersOptions = JSON.parse(searchParams.get('filtersOptions') || '{}');
         const filtersResponse = await searchFilters(filtersQuery as string, filtersOptions as Record<string, any>);
-        return res.status(200).json(filtersResponse);
+        return NextResponse.json(filtersResponse);
 
       case 'getJobDetails':
-        const { jobId, jobDetailsOptions } = req.query;
+        const jobId = searchParams.get('jobId');
+        const jobDetailsOptions = JSON.parse(searchParams.get('jobDetailsOptions') || '{}');
         const jobDetailsResponse = await getJobDetails(jobId as string, jobDetailsOptions as Record<string, any>);
-        return res.status(200).json(jobDetailsResponse);
+        return NextResponse.json(jobDetailsResponse);
 
       case 'getEstimatedSalary':
-        const { jobTitle, location, salaryOptions } = req.query;
+        const jobTitle = searchParams.get('jobTitle');
+        const location = searchParams.get('location');
+        const salaryOptions = JSON.parse(searchParams.get('salaryOptions') || '{}');
         const salaryResponse = await getEstimatedSalary(jobTitle as string, location as string, salaryOptions as Record<string, any>);
-        return res.status(200).json(salaryResponse);
+        return NextResponse.json(salaryResponse);
 
       default:
-        return res.status(400).json({ error: 'Invalid action parameter' });
+        return NextResponse.json({ error: 'Invalid action parameter' }, { status: 400 });
     }
   } catch (error) {
     console.error('API error:', error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
