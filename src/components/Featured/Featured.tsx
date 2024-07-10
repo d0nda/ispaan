@@ -1,6 +1,4 @@
-// components/Featured/Featured.tsx
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import FeaturedList from './FeaturedList';
 import Loading from './Loading'; 
@@ -29,7 +27,6 @@ export default function Featured() {
         fetchLatestJobs();
     }, []);
 
-    // Slice the latestJobs array to show only 5 jobs
     const limitedJobs = latestJobs.slice(0, 5);
 
     if (isLoading) {

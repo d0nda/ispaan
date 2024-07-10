@@ -1,20 +1,23 @@
+"use client"
 import Link from "next/link"
 import Container from "./ui/container"
 import { Button } from "./ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { BiMenu } from "react-icons/bi";
+import { useTheme } from "next-themes"
+import { BsSun, BsMoonStars } from "react-icons/bs";
 //import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 //import { getServerSession } from "next-auth";
-import { getAuthSession } from '@/lib/auth'
+//import { getAuthSession } from '@/lib/auth'
 //import ProfileButton from "./ui/ProfileButton";
 
 
 
-export default async function Header() {
+export default function Header() {
     //const session = await getAuthSession();
     //"use client" : const { data: session, status } = useSession()
     //console.log("useSession Hook session object", session)
-
+    const { theme, setTheme } = useTheme();
     const routes = [
         {
             id: 1,
@@ -26,16 +29,7 @@ export default async function Header() {
             title: "Find Jobs",
             url: "/findjob",
         },
-        {
-            id: 3,
-            title: "About us",
-            url: "/about",
-        },
-        {
-            id: 4,
-            title: "Contact us",
-            url: "/contact",
-        },
+        
     ];
 
     return (
@@ -78,7 +72,18 @@ export default async function Header() {
                             </Button>
                         ))}
                     </nav>
-                    {/*<div className="flex items-center">*/}
+                    <div className="flex items-center">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            aria-label="Toggle Theme"
+                            className="inline-flex sm:ml-auto sm:mt-0 mt-2 justify-items-center sm:justify-center"
+                            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                        >
+                            <BsSun className="h-6 w-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                            <BsMoonStars className="absolute h-6 w-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                            <span className="sr-only">Toggle Theme</span>
+                        </Button>
                         {/*session && (
                             <>
                                 <ProfileButton />
@@ -91,7 +96,7 @@ export default async function Header() {
                             </Button>
                         )*/}
 
-                    {/*</div>*/}
+                    </div>
                 </div>
             </Container>
         </header>

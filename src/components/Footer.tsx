@@ -5,12 +5,9 @@ import Link from 'next/link'
 import { FaFacebook } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa6";
 import Container from './ui/container';
-import { useTheme } from "next-themes"
-import { BsSun, BsMoonStars } from "react-icons/bs";
-import { Button } from "./ui/button"
 
 const Footer = () => {
-    const { theme, setTheme } = useTheme();
+   
     return (
 
         <footer className="border-black border-opacity-20 dark:border-white border-t dark:border-opacity-20">
@@ -66,28 +63,15 @@ const Footer = () => {
             </Container>
             <div className="border-black border-opacity-20 dark:border-white border-t dark:border-opacity-20">
                 <div className="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
-                    <span className="inline-flex sm:mr-auto sm:mt-0 mt-2 mb-3 justify-center sm:justify-start">
-                        <a className="text-black dark:text-white">
-                            <FaFacebook size={25} />
-                        </a>
-                        <a className="ml-3 text-black dark:text-white">
-                            <FaTwitter size={25} />
-                        </a>
-
+                    <p className="text-black dark:text-white text-md text-center sm:text-left sm:mr-auto mb-3 sm:mb-0">© 2024 ispaan.com</p>
+                    <span className="inline-flex sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-end">
+                    <a className="text-black dark:text-white">
+                        <FaFacebook size={25} />
+                    </a>
+                    <a className="ml-3 text-black dark:text-white">
+                        <FaTwitter size={25} />
+                    </a>
                     </span>
-                    <p className="text-black dark:text-white text-md text-center sm:text-center mx-auto">© 2024 ispaan.com
-                    </p>
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        aria-label="Toggle Theme"
-                        className="inline-flex sm:ml-auto sm:mt-0 mt-2 justify-items-center sm:justify-center"
-                        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                    >
-                        <BsSun className="h-6 w-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                        <BsMoonStars className="absolute h-6 w-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                        <span className="sr-only">Toggle Theme</span>
-                    </Button>
                 </div>
             </div>
         </footer>

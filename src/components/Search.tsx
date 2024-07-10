@@ -3,6 +3,7 @@ import { useSearchParams } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { CiSearch } from 'react-icons/ci';
+import { X } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
 
@@ -52,12 +53,17 @@ export default function Search() {
 
   const handleSearch = () => {
     fetchData(searchQuery);
+    setSearchQuery('');
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleSearch();
     }
+  };
+
+  const handleRemoveJob = (index: number) => {
+    setSearchResults((prevResults) => prevResults.filter((_, i) => i !== index));
   };
 
   return (
@@ -71,14 +77,17 @@ export default function Search() {
             onKeyDown={handleKeyDown}
             value={searchQuery}
           />
-          <button onClick={handleSearch} className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-auto">
+          <button
+            onClick={handleSearch}
+            className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-auto"
+          >
             <CiSearch size={30} />
           </button>
         </div>
       </DialogTrigger>
-      <DialogContent className="max-w-screen-sm mx-auto sm:max-w-[425px]">
+      <DialogContent className="max-w-screen-md mx-auto sm:max-w-[425px] px-4 sm:px-0">
         <DialogHeader>
-          <div className="mb-8 relative w-[300px] mx-auto max-w-sm">
+          <div className="mb-8 relative w-[200px] sm:w-[300px] mx-auto max-w-sm">
             <Input
               type="search"
               placeholder="Search for a Job"
@@ -86,28 +95,35 @@ export default function Search() {
               onKeyDown={handleKeyDown}
               value={searchQuery}
             />
-            <button onClick={handleSearch} className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-auto">
+            <button
+              onClick={handleSearch}
+              className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-auto"
+            >
               <CiSearch size={30} />
             </button>
           </div>
           <div className="mb-5 border-black border-opacity-20 dark:border-white border-t"></div>
-          <DialogDescription>
+          <DialogDescription className="overflow-y-auto max-h-[60vh]">
             {isLoading ? (
-              <p>Loading...</p>
+              <p className="text-center">Searching...</p>
+            ) : searchResults.length > 0 ? (
+              <div>
+                {searchResults.map((job: any, index: number) => (
+                  <div key={index} className="border p-4 hover:bg-gray-100 flex justify-between items-center">
+                    <Link href={`/search/${encodeURIComponent(job.job_id)}`}>
+                      {job.job_title} - {job.company_name}
+                    </Link>
+                    <button
+                      onClick={() => handleRemoveJob(index)}
+                      className="text-red-500 ml-4"
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+                ))}
+              </div>
             ) : (
-              searchResults.length > 0 ? (
-                <div>
-                  {searchResults.map((job: any, index: number) => (
-                    <div key={index}>
-                      <Link href={`/search/${encodeURIComponent(job.job_id)}`} passHref>
-                        {job.job_title} - {job.company_name}
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p>No jobs found.</p>
-              )
+              <p className="text-center">No jobs found.</p>
             )}
           </DialogDescription>
         </DialogHeader>

@@ -160,29 +160,6 @@ export interface Job {
   }
   
 
-  
-  export interface JobRequiredExperience {
-    required_experience_in_months: number;
-    experience_mentioned: boolean;
-    experience_preferred: boolean;
-  }
-  
-  export interface JobRequiredEducation {
-    degree: string;
-    education_mentioned: boolean;
-    qualifications: string[];
-  }
-  
-  export interface JobHighlights {
-    qualifications: string[];
-    responsibilities: string[];
-  }
-  
-  export interface EmployerReview {
-    rating: number;
-    review: string;
-  }
-
 export interface JobDetails {
   
   employer_name: string;
@@ -231,7 +208,31 @@ export interface JobDetails {
   
 }
 
+export interface JobRequiredExperience {
+  required_experience_in_months: number;
+  experience_mentioned: boolean;
+  experience_preferred: boolean;
+}
+
+export interface JobRequiredEducation {
+  degree: string;
+  education_mentioned: boolean;
+  qualifications: string[];
+}
+
+export interface JobHighlights {
+  qualifications: string[];
+  responsibilities: string[];
+}
+
+export interface EmployerReview {
+  rating: number;
+  review: string;
+}
+
 export type JobDetailsResponse = JobDetails;
+
+
   
 export interface EstimatedSalaryResponse {
     data: {

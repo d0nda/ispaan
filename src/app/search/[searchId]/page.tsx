@@ -37,20 +37,61 @@ const SearchDetailsPage: React.FC<SearchDetailsPageProps> = ({ params: { searchI
   }, [searchId]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="flex items-center justify-center h-screen">Loading...</div>;
   }
 
   if (!jobDetails) {
-    return <div>Job details not found</div>;
+    return <div className="flex items-center justify-center h-screen">Job details not found</div>;
+  }
+
+  // Split job description into paragraphs and bullet points
+  const jobDescriptionLines = jobDetails.job_description.split('\n');
+  const jobDescriptionElements: (string | JSX.Element)[] = [];
+  let currentParagraph: string[] = [];
+
+  jobDescriptionLines.forEach((line: string) => {
+    const trimmedLine = line.trim();
+    if (trimmedLine.startsWith('•')) {
+      if (currentParagraph.length > 0) {
+        jobDescriptionElements.push(currentParagraph.join(' '));
+        currentParagraph = [];
+      }
+      jobDescriptionElements.push(<li key={trimmedLine}>{trimmedLine.slice(1).trim()}</li>);
+    } else {
+      currentParagraph.push(trimmedLine);
+      if (currentParagraph.join(' ').length >= 300) {
+        jobDescriptionElements.push(currentParagraph.join(' '));
+        currentParagraph = [];
+      }
+    }
+  });
+
+  if (currentParagraph.length > 0) {
+    jobDescriptionElements.push(currentParagraph.join(' '));
   }
 
   return (
-    <div>
-      <h1>{jobDetails.job_title}</h1>
-      <p>Company: {jobDetails.company_name}</p>
-      <p>Location: {jobDetails.job_location}</p>
-      <p>Job Description: {jobDetails.job_description}</p>
-      <Link href="/">Back to Search</Link>
+    <div className="container mx-auto p-4">
+      <div className="p-6">
+        <h1 className="text-3xl font-bold mb-4">{jobDetails.job_title}</h1>
+        <p className="text-lg text-gray-700 mb-2">Company: {jobDetails.company_name}</p>
+        <p className="text-lg text-gray-700 mb-4">Location: {jobDetails.job_location}</p>
+        <div className="bg-slate-400 shadow-md rounded p-4">
+          <h2 className="text-xl font-semibold mb-4">Job Description</h2>
+          {jobDescriptionElements.map((element, index) => (
+            <div key={index}>
+              {typeof element === 'string' ? <p className="mb-4">{element}</p> : <ul className="list-disc pl-5">{element}</ul>}
+            </div>
+          ))}
+        </div>
+        <div className="mt-6">
+          <Link href="/">
+            <button className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">
+              Back to Search
+            </button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

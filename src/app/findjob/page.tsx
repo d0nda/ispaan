@@ -6,7 +6,7 @@ export default function findjob() {
     return (
         <Container>
         <div>
-            <h1>Find Jobs Here</h1>
+            <h1 className="text-2xl font-bold text-center mt-10 mb-8">Find Jobs Here</h1>
             <JobAccordion />
         </div>
         </Container>
