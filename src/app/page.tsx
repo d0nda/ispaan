@@ -2,7 +2,7 @@
 
 import Container from "@/components/ui/container";
 import { MdEmail } from "react-icons/md";
-import Category from "@/components/Category/Category";
+//import Category from "@/components/Category/Category";
 import Featured from "@/components/Featured/Featured";
 import JobAccordion from "@/components/JobAccordion/JobAccordion";
 import Search from "@/components/Search";
@@ -30,9 +30,9 @@ export default function Home() {
       <Container>
 
         {/* Category badge */}
-        <Container>
-        <Category />
-        </Container>
+        {/*<Container>*/}
+        {/*<Category />*/}
+        {/*</Container>*/}
         
 
         {/* Featured Jobs */}
