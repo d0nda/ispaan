@@ -1,5 +1,4 @@
-// components/JobAccordion/JobAccordion.tsx
-"use client";
+"use client"
 import React, { useEffect, useState } from 'react';
 import Loading from './Loading';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
@@ -38,6 +37,12 @@ const JobAccordion: React.FC = () => {
     );
   }
 
+  
+  const extractSentences = (text: string, numSentences: number = 1) => {
+    const sentences = text.match(/[^.!?]*[.!?]/g) || [];
+    return sentences.slice(0, numSentences).join(' ');
+  };
+
   return (
     <div>
       <Accordion type="single" collapsible className="w-full">
@@ -58,7 +63,7 @@ const JobAccordion: React.FC = () => {
               <div className="px-5 py-5 text-sm">
                 {job.job_description && (
                   <>
-                    <ReactMarkdown>{job.job_description}</ReactMarkdown>
+                    <ReactMarkdown>{extractSentences(job.job_description, 2)}</ReactMarkdown>
                     <br />
                   </>
                 )}

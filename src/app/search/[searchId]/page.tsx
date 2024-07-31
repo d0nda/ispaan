@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import { JobDetails } from '../../../../types/job';
+import Loading from '../Loading';
 
 interface SearchDetailsPageProps {
   params: {
@@ -10,7 +12,7 @@ interface SearchDetailsPageProps {
 }
 
 const SearchDetailsPage: React.FC<SearchDetailsPageProps> = ({ params: { searchId } }) => {
-  const [jobDetails, setJobDetails] = useState<any>(null);
+  const [jobDetails, setJobDetails] = useState<JobDetails | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -37,7 +39,7 @@ const SearchDetailsPage: React.FC<SearchDetailsPageProps> = ({ params: { searchI
   }, [searchId]);
 
   if (isLoading) {
-    return <div className="flex items-center justify-center h-screen">Loading...</div>;
+    return <Loading />;
   }
 
   if (!jobDetails) {
@@ -59,10 +61,6 @@ const SearchDetailsPage: React.FC<SearchDetailsPageProps> = ({ params: { searchI
       jobDescriptionElements.push(<li key={trimmedLine}>{trimmedLine.slice(1).trim()}</li>);
     } else {
       currentParagraph.push(trimmedLine);
-      if (currentParagraph.join(' ').length >= 300) {
-        jobDescriptionElements.push(currentParagraph.join(' '));
-        currentParagraph = [];
-      }
     }
   });
 
@@ -72,24 +70,95 @@ const SearchDetailsPage: React.FC<SearchDetailsPageProps> = ({ params: { searchI
 
   return (
     <div className="container mx-auto p-4">
-      <div className="p-6">
-        <h1 className="text-3xl font-bold mb-4">{jobDetails.job_title}</h1>
-        <p className="text-lg text-gray-700 mb-2">Company: {jobDetails.company_name}</p>
-        <p className="text-lg text-gray-700 mb-4">Location: {jobDetails.job_location}</p>
-        <div className="bg-slate-400 shadow-md rounded p-4">
-          <h2 className="text-xl font-semibold mb-4">Job Description</h2>
-          {jobDescriptionElements.map((element, index) => (
-            <div key={index}>
-              {typeof element === 'string' ? <p className="mb-4">{element}</p> : <ul className="list-disc pl-5">{element}</ul>}
+      <div className="flex flex-col md:flex-row md:space-x-8">
+        <div className="md:w-2/3">
+          <div className="flex flex-col space-y-4">
+            <div className="flex items-center space-x-4">
+              {jobDetails.employer_logo && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={jobDetails.employer_logo}
+                  alt={`${jobDetails.employer_name} Logo`}
+                  className="w-24 h-24 rounded"
+                />
+              )}
+              <div>
+                <h1 className="text-2xl font-bold">{jobDetails.job_title}</h1>
+                <p className="text-gray-600">{jobDetails.employer_name}</p>
+                <div className="flex items-center space-x-2 text-gray-500">
+                  <span>{jobDetails.job_city}, {jobDetails.job_state}, {jobDetails.job_country}</span>
+                  <span>|</span>
+                  <span>{jobDetails.job_employment_type}</span>
+                  <span>|</span>
+                  {jobDetails.job_min_salary && jobDetails.job_max_salary && (
+                    <span>{`${jobDetails.job_min_salary} - ${jobDetails.job_max_salary} ${jobDetails.job_salary_currency}`}</span>
+                  )}
+                </div>
+              </div>
             </div>
-          ))}
+            <div className="bg-slate-400 shadow-md rounded p-4">
+              <h2 className="text-xl font-semibold mb-4">Job Description</h2>
+              {jobDescriptionElements.map((element, index) => (
+                <div key={index}>
+                  {typeof element === 'string' ? <p className="mb-4">{element}</p> : <ul className="list-disc pl-5">{element}</ul>}
+                </div>
+              ))}
+            </div>
+            {jobDetails.job_highlights && jobDetails.job_highlights.responsibilities && (
+              <div className="bg-slate-500 shadow-md rounded p-4">
+                <h2 className="text-xl font-semibold mb-4">Key Responsibilities</h2>
+                <ul className="list-disc pl-5 space-y-2">
+                  {jobDetails.job_highlights.responsibilities.map((responsibility, index) => (
+                    <li key={index}>{responsibility}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {jobDetails.job_required_skills && (
+              <div className="bg-slate-400 shadow-md rounded p-4">
+                <h2 className="text-xl font-semibold mb-4">Skills & Experience</h2>
+                <ul className="list-disc pl-5 space-y-2">
+                  {jobDetails.job_required_skills.map((skill, index) => (
+                    <li key={index}>{skill}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {jobDetails.job_benefits && (
+              <div className="bg-slate-400 shadow-md rounded p-4">
+                <h2 className="text-xl font-semibold mb-4">Benefits</h2>
+                <ul className="list-disc pl-5 space-y-2">
+                  {jobDetails.job_benefits.map((benefit: any, index: any) => (
+                    <li key={index}>{benefit}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="mt-6">
-          <Link href="/">
-            <button className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">
-              Back to Search
-            </button>
-          </Link>
+        <div className="md:w-1/3 mt-3">
+          <div className="bg-slate-400 shadow-md rounded p-4">
+            <h2 className="text-xl font-semibold mb-4">Job Overview</h2>
+            <div className="space-y-2">
+              <p><strong>Date Posted:</strong> {new Date(jobDetails.job_posted_at_timestamp * 1000).toLocaleDateString()}</p>
+              <p><strong>Expiration Date:</strong> {new Date(jobDetails.job_offer_expiration_timestamp * 1000).toLocaleDateString()}</p>
+              <p><strong>Location:</strong> {jobDetails.job_city}, {jobDetails.job_state}, {jobDetails.job_country}</p>
+              <p><strong>Job Type:</strong> {jobDetails.job_employment_type}</p>
+              <p><strong>Remote:</strong> {jobDetails.job_is_remote ? "Yes" : "No"}</p>
+              <p><strong>Publisher:</strong> {jobDetails.job_publisher}</p>
+              <p><strong>Company Type:</strong> {jobDetails.employer_company_type}</p>
+              {jobDetails.job_min_salary && jobDetails.job_max_salary && (
+                <p><strong>Salary:</strong> {`${jobDetails.job_min_salary} - ${jobDetails.job_max_salary} ${jobDetails.job_salary_currency}`}</p>
+              )}
+            </div>
+          </div>
+          <div className="mt-4">
+            <Link href={jobDetails.job_apply_link} target="_blank" rel="noopener noreferrer">
+              <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+                Apply For Job
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

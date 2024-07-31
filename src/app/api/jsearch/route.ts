@@ -1,5 +1,4 @@
 //api/jsearch/route.ts
-// api/jsearch/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { searchJobs, searchFilters, getJobDetails, getEstimatedSalary } from '../../../lib/jsearch';
 
